@@ -1,0 +1,126 @@
+name: Veira
+options:
+  bundleIdPrefix: com.veira
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  developmentLanguage: en
+  xcodeVersion: "16.0"
+  defaultConfig: Debug
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "18.0"
+    ENABLE_USER_SCRIPT_SANDBOXING: true
+    CLANG_ENABLE_MODULES: true
+    SWIFT_STRICT_CONCURRENCY: complete
+    GENERATE_INFOPLIST_FILE: false
+
+configs:
+  Debug: debug
+  Release: release
+
+packages:
+  VeiraCore:
+    path: Packages/VeiraCore
+  VeiraDesignSystem:
+    path: Packages/VeiraDesignSystem
+  VeiraDomain:
+    path: Packages/VeiraDomain
+  VeiraNetworking:
+    path: Packages/VeiraNetworking
+  VeiraData:
+    path: Packages/VeiraData
+  VeiraStoreKit:
+    path: Packages/VeiraStoreKit
+
+fileGroups:
+  - Config
+  - Documentation
+  - Scripts
+
+targets:
+  Veira:
+    type: application
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: Apps/Veira/Sources/Veira
+        excludes:
+          - Resources
+    resources:
+      - path: Apps/Veira/Sources/Veira/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.veira.app
+        PRODUCT_NAME: Veira
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_FILE: Apps/Veira/Sources/Veira/Resources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        SWIFT_STRICT_CONCURRENCY: complete
+        CODE_SIGN_STYLE: Automatic
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        Release:
+          SWIFT_COMPILATION_MODE: wholemodule
+    configFiles:
+      Debug: Config/Debug.xcconfig
+      Release: Config/Release.xcconfig
+    dependencies:
+      - package: VeiraCore
+      - package: VeiraDesignSystem
+      - package: VeiraDomain
+      - package: VeiraNetworking
+      - package: VeiraData
+      - package: VeiraStoreKit
+
+  VeiraTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Apps/Veira/Tests/VeiraTests
+    dependencies:
+      - target: Veira
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.veira.app.tests
+        GENERATE_INFOPLIST_FILE: true
+
+  VeiraUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: Apps/Veira/UITests/VeiraUITests
+    dependencies:
+      - target: Veira
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.veira.app.uitests
+        GENERATE_INFOPLIST_FILE: true
+
+schemes:
+  Veira:
+    build:
+      targets:
+        Veira: all
+    run:
+      config: Debug
+      storeKitConfiguration: Config/Veira.storekit
+    test:
+      config: Debug
+      gatherCoverageData: true
+      targets:
+        - VeiraTests
+        - VeiraUITests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

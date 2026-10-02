@@ -1,0 +1,7 @@
+// Shared base settings for all configurations
+IPHONEOS_DEPLOYMENT_TARGET = 18.0
+SWIFT_VERSION = 6.0
+TARGETED_DEVICE_FAMILY = 1
+VEIRA_API_BASE_URL_DEVELOPMENT = https:/$()/api.dev.veira.app/v1
+VEIRA_API_BASE_URL_STAGING = https:/$()/api.staging.veira.app/v1
+VEIRA_API_BASE_URL_PRODUCTION = https:/$()/api.veira.app/v1

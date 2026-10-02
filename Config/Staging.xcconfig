@@ -1,0 +1,5 @@
+#include "Shared.xcconfig"
+
+VEIRA_ENVIRONMENT = staging
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+SWIFT_OPTIMIZATION_LEVEL = -O

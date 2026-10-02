@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  packages:
+    name: Package tests
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: Run unit tests for each Swift package
+        run: |
+          for package in VeiraCore VeiraDomain VeiraNetworking VeiraData VeiraStoreKit; do
+            echo "::group::$package"
+            swift test --package-path "Packages/$package"
+            echo "::endgroup::"
+          done
+
+  app:
+    name: Build app
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - run: brew install xcodegen
+      - run: ./Scripts/generate-project.sh
+      - name: Build for the iOS Simulator
+        run: |
+          xcodebuild \
+            -project Veira.xcodeproj \
+            -scheme Veira \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
