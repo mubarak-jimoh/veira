@@ -1,6 +1,6 @@
 # Veira
 
-[![CI](https://github.com/Mubarakjk/veira/actions/workflows/ci.yml/badge.svg)](https://github.com/Mubarakjk/veira/actions/workflows/ci.yml)
+[![CI](https://github.com/mubarak-jimoh/veira/actions/workflows/ci.yml/badge.svg)](https://github.com/mubarak-jimoh/veira/actions/workflows/ci.yml)
 
 A skincare and wellness app for iPhone, written in Swift 6 and SwiftUI. Scan your skin, follow a daily routine and watch your progress over time.
 
@@ -55,7 +55,7 @@ You need Xcode 16 or newer and [XcodeGen](https://github.com/yonaskolb/XcodeGen)
 
 ```bash
 brew install xcodegen
-git clone https://github.com/Mubarakjk/veira.git
+git clone https://github.com/mubarak-jimoh/veira.git
 cd veira
 ./Scripts/generate-project.sh
 open Veira.xcodeproj
